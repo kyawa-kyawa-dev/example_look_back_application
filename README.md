@@ -1,0 +1,2 @@
+# example_look_back_application
+これはRailsを用いた振り返りアプリのMVPです。MVPで需要がありそうならReactを用いたリッチなUIやログイン機能、sidekiqを用いたリマインダーなどを作成します
