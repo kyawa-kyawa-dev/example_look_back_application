@@ -1,0 +1,28 @@
+FROM ruby:3.2.2
+
+# 環境変数
+ENV APP_HOME /app
+
+# 作業ディレクトリ指定
+WORKDIR ${APP_HOME}
+
+# コンテナがリッスンするポートを指定
+EXPOSE 3000
+
+# ローカルのGemfileをコンテナ内にコピー
+COPY Gemfile ${APP_HOME}/Gemfile
+COPY Gemfile.lock ${APP_HOME}/Gemfile.lock
+
+# パッケージリストを最新にする
+RUN apt-get update
+
+# Gemをアップデート
+RUN bundle install
+
+# コンテナ起動時に実行させるスクリプト
+COPY entrypoint.sh /usr/bin/
+RUN chmod +x /usr/bin/entrypoint.sh
+ENTRYPOINT ["entrypoint.sh"]
+
+# コンテナ実行時にRailsサーバーを起動
+CMD ["bundle", "exec", "rails", "server", "-b", "0.0.0.0"]
