@@ -1,0 +1,33 @@
+# .annotaterb.yml
+
+#--------------------------------------------------------
+# モデルに対してスキーマ情報をコメントとして追記
+active_record: true
+models: true
+
+#--------------------------------------------------------
+# アノテーションの挿入位置
+# true なら class の直前、falseならファイル末尾
+position_in_class: true
+#--------------------------------------------------------
+
+#--------------------------------------------------------
+# スキーマ表示の詳細
+show_indexes: true
+show_foreign_key: true
+show_comment: true
+show_complete_foreign_keys: false
+#--------------------------------------------------------
+
+#--------------------------------------------------------
+# 出力の整形
+sort: false
+simple_indexes: false
+format_bare: false
+#--------------------------------------------------------
+
+force: true
+timestamp: true
+trace: false
+routes: false
+controllers: false
