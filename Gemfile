@@ -49,6 +49,9 @@ gem 'annotaterb'
 # tailwindcssの導入
 gem 'tailwindcss-rails'
 
+# 認証周り
+gem 'device'
+
 # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
 # gem "image_processing", "~> 1.2"
 
