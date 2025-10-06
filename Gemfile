@@ -50,7 +50,7 @@ gem 'annotaterb'
 gem 'tailwindcss-rails'
 
 # 認証周り
-gem 'device'
+gem 'devise'
 
 # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
 # gem "image_processing", "~> 1.2"
