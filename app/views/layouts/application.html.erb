@@ -23,8 +23,8 @@
   </head>
 
   <body>
-    <%= render 'shared/header' %>
-    <main class="container mx-auto mt-28 px-5 flex">
+    <%= render 'shared/header', transparent: content_for?(:transparent_header) %>
+    <main>
       <%= yield %>
     </main>
   </body>
