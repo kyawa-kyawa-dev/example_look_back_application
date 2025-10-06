@@ -23,8 +23,8 @@
   </head>
 
   <body>
-    <%= render 'shared/header', transparent: content_for?(:transparent_header) %>
-    <main>
+    <%= render 'shared/header', transparent: content_for?(:transparent_header) unless content_for?(:hide_header) %>
+    <main class="<%= content_for?(:hide_header) || content_for?(:transparent_header) ? '' : 'pt-20' %>">
       <%= yield %>
     </main>
   </body>
