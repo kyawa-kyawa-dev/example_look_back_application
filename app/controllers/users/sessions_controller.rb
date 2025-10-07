@@ -25,11 +25,14 @@ class Users::SessionsController < Devise::SessionsController
     devise_parameter_sanitizer.permit(:sign_in, keys: [:attribute])
   end
 
+  # これはログインの後にリダイレクトする先を指定する
+  # resourceにはログインしたユーザーオブジェクトが入っている
   def after_sign_in_path_for(resource)
-    root_path
+    knowledges_path
   end
 
+  # これはログアウトした際にリダイレクトする先を指定している
   def after_sign_out_path_for(resource_or_scope)
-    root_path
+    new_user_session_path
   end
 end

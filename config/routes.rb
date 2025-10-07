@@ -3,6 +3,8 @@ Rails.application.routes.draw do
     registrations: 'users/registrations',
     sessions: 'users/sessions'
   }
+
+  resources :knowledges
   get "static_pages/home"
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
