@@ -1,26 +1,57 @@
-<h2>Log in</h2>
+<% content_for :hide_header, true %>
 
-<%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
-  </div>
-
-  <div class="field">
-    <%= f.label :password %><br />
-    <%= f.password_field :password, autocomplete: "current-password" %>
-  </div>
-
-  <% if devise_mapping.rememberable? %>
-    <div class="field">
-      <%= f.check_box :remember_me %>
-      <%= f.label :remember_me %>
+<div class="min-h-screen bg-gradient-to-br from-indigo-50 via-white to-purple-50 flex items-center justify-center p-4">
+  <div class="w-full max-w-2xl">
+    <div class="text-center mb-8">
+      <h1 class="text-3xl font-bold text-indigo-600 mb-2">Knowledge Hub</h1>
+      <p class="text-gray-600">あなたの学びを記録・振り返る</p>
     </div>
-  <% end %>
 
-  <div class="actions">
-    <%= f.submit "Log in" %>
+    <div class="bg-white rounded-xl shadow-lg border border-gray-200 p-8 md:p-12">
+      <h2 class="text-2xl font-bold text-gray-800 mb-6">ログイン</h2>
+
+      <%= form_for(resource, as: resource_name, url: session_path(resource_name), html: { class: "space-y-5" }) do |f| %>
+        <div class="field">
+          <%= f.label :email, "メールアドレス", class: "block text-sm font-semibold text-gray-700 mb-2" %>
+          <div class="relative">
+            <svg class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.207"/>
+            </svg>
+            <%= f.email_field :email, autofocus: true, autocomplete: "email", placeholder: "your@email.com", class: "w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent" %>
+          </div>
+        </div>
+
+        <div class="field">
+          <%= f.label :password, "パスワード", class: "block text-sm font-semibold text-gray-700 mb-2" %>
+          <div class="relative">
+            <svg class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
+            </svg>
+            <%= f.password_field :password, autocomplete: "current-password", placeholder: "••••••••", class: "w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent" %>
+          </div>
+        </div>
+
+        <% if devise_mapping.rememberable? %>
+          <div class="field flex items-center justify-between">
+            <label class="flex items-center">
+              <%= f.check_box :remember_me, class: "w-4 h-4 text-indigo-600 rounded focus:ring-2 focus:ring-indigo-500" %>
+              <%= f.label :remember_me, "ログイン状態を保持", class: "ml-2 text-sm text-gray-700" %>
+            </label>
+          </div>
+        <% end %>
+
+        <div class="actions">
+          <%= f.submit "ログイン", class: "w-full py-3 bg-indigo-600 text-white rounded-lg font-semibold hover:bg-indigo-700 transition-colors shadow-md cursor-pointer" %>
+        </div>
+      <% end %>
+
+      <div class="mt-6 pt-6 border-t border-gray-200 text-center">
+        <%= render "devise/shared/links" %>
+      </div>
+    </div>
+
+    <div class="mt-8 text-center text-sm text-gray-500">
+      <p>&copy; 2025 Knowledge Hub. All rights reserved.</p>
+    </div>
   </div>
-<% end %>
-
-<%= render "devise/shared/links" %>
+</div>
