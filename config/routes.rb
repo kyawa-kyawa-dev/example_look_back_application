@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   }
 
   resources :knowledges
+  resources :tags
   get "static_pages/home"
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
