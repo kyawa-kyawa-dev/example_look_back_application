@@ -22,11 +22,14 @@
     <%= javascript_importmap_tags %>
   </head>
 
-  <body>
+  <body data-controller="sidebar-toggle">
     <% if controller_name == 'static_pages' && action_name == 'home' %>
       <%= render 'shared/header_for_top' %>
+    <% else %>
+      <%= render 'shared/header' %>
+      <%= render 'shared/sidebar' %>
     <% end %>
-    <main>
+    <main class="pt-20">
       <%= yield %>
     </main>
   </body>

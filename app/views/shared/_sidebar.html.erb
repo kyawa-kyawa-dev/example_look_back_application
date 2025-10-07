@@ -1,0 +1,28 @@
+<!-- サイドバー -->
+<aside
+  data-sidebar-toggle-target="sidebar"
+  class="fixed left-0 top-20 h-[calc(100vh-5rem)] w-64 bg-white border-r border-gray-200 z-40 transform -translate-x-full transition-transform duration-300 ease-in-out"
+>
+  <div class="p-4">
+    <h2 class="text-xl font-bold text-indigo-600 mb-4">メニュー</h2>
+
+    <nav class="space-y-2">
+      <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-lg transition-colors">
+        ホーム
+      </a>
+      <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-lg transition-colors">
+        ナレッジ
+      </a>
+      <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-lg transition-colors">
+        タグ管理
+      </a>
+    </nav>
+  </div>
+</aside>
+
+<!-- オーバーレイ -->
+<div
+  data-sidebar-toggle-target="overlay"
+  data-action="click->sidebar-toggle#toggle"
+  class="hidden fixed inset-0 bg-gray-400/90 z-30"
+></div>
