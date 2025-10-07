@@ -35,12 +35,14 @@ create_table "knowledges", force: :cascade do |t|
 end
 
 create_table "tags", force: :cascade do |t|
+  t.references "user", null: false
   t.string "name", limit: 50, null: false
   t.string "color", null: false
   t.datetime "created_at", null: false
   t.datetime "updated_at", null: false
 
   t.index ["name"], name: "index_tags_on_name", unique: true
+  add_foreign_key :tags, :users
 end
 
 create_table "knowledge_tags", force: :cascade do |t|
