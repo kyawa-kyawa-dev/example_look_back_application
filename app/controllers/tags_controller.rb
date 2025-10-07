@@ -1,6 +1,7 @@
 class TagsController < ApplicationController
   def index
     # ここでは登録済みのタグを一覧で表示
+    @tags = Tag.where(user_id: current_user.id)
   end
 
   def new
@@ -15,6 +16,16 @@ class TagsController < ApplicationController
       redirect_to tags_path, notice: "タグが作成されました"
     else
       render :new, status: :unprocessable_entity
+    end
+  end
+
+  def destroy
+    tag = Tag.find(params[:id])
+
+    if tag.destroy
+      redirect_to tags_path, notice: 'tagを削除しました'
+    else
+      render :index, alerts: 'tagの削除に失敗しました'
     end
   end
 
