@@ -23,8 +23,10 @@
   </head>
 
   <body>
-    <%= render 'shared/header', transparent: content_for?(:transparent_header) unless content_for?(:hide_header) %>
-    <main class="<%= content_for?(:hide_header) || content_for?(:transparent_header) ? '' : 'pt-20' %>">
+    <% if controller_name == 'static_pages' && action_name == 'home' %>
+      <%= render 'shared/header_for_top' %>
+    <% end %>
+    <main>
       <%= yield %>
     </main>
   </body>
