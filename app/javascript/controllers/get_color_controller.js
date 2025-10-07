@@ -4,16 +4,19 @@ import {  Controller } from "@hotwired/stimulus"
 export default class extends Controller { 
     // HTMLでdata-color-target=pickerと指定されたDOMを使用することを指定
     // document.querySelectorを使用しないでもDOMにアクセスできるようにする
-    static targets = [ "picker", "preview" ]
+    static targets = [ "picker", "preview", "text" ]
 
     // ここでpicker要素がクリックされた際のイベントを定義する
     getColor() {
         const color = this.pickerTarget.value;
         const preview = this.previewTarget;
+        const text = this.textTarget;
 
         // プレビューに色を適用（20%の透明度で背景、40%で枠線）
         preview.style.backgroundColor = color + "20";
         preview.style.color = color;
         preview.style.borderColor = color + "40";
+
+        text.value = color;
     }
 }
