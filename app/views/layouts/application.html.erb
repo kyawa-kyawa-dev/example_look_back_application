@@ -25,12 +25,15 @@
   <body data-controller="sidebar-toggle">
     <% if controller_name == 'static_pages' && action_name == 'home' %>
       <%= render 'shared/header_for_top' %>
+      <main>
+        <%= yield %>
+      </main>
     <% else %>
       <%= render 'shared/header' %>
       <%= render 'shared/sidebar' %>
+      <main class="pt-20">
+        <%= yield %>
+      </main>
     <% end %>
-    <main class="pt-20">
-      <%= yield %>
-    </main>
   </body>
 </html>
