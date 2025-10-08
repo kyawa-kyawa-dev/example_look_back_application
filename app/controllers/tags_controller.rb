@@ -10,10 +10,13 @@ class TagsController < ApplicationController
 
   def create
     attrs = permit_params.merge(user_id: current_user.id)
-    tags = Tag.new(attrs)
+    @tag = Tag.new(attrs)
 
-    if tags.save
-      redirect_to tags_path, notice: "タグが作成されました"
+    if @tag.save
+      respond_to do |format|
+        format.turbo_stream
+        format.html { redirect_to tags_path, notice: "タグが作成されました" }
+      end
     else
       render :new, status: :unprocessable_entity
     end

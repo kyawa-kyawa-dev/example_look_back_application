@@ -1,0 +1,5 @@
+<%= turbo_stream.append "tags", partial: "tags/tag", locals: { tag: @tag } %>
+
+<%= turbo_stream.replace "modal" do %>
+  <turbo-frame id="modal"></turbo-frame>
+<% end %>

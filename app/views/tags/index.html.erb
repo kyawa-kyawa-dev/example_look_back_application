@@ -11,7 +11,9 @@
   </div>
 
   <!-- indexアクションなどで複数のコレクションをレンダリングする際には以下の方が使える-->
-  <%= render @tags %>
+  <div id="tags">
+    <%= render @tags %>
+  </div>
 
   <!-- これはモーダル用のフレーム(最初は空) -->
   <turbo-frame id="modal"></turbo-frame>  
