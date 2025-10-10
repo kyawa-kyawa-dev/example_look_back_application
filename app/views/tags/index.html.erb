@@ -1,24 +1,20 @@
-<div data-controller="modal">
-  <div class="overlay hidden fixed inset-0 z-40" style="background-color: rgba(0, 0, 0, 0.5);" data-modal-target="overlay"></div>
-
-  <div class="bg-white rounded-lg border border-gray-200 p-6 max-w-7xl mx-auto">
-    <!-- タイトル行 -->
-    <div class="flex items-center justify-between mb-4">
-      <h3 class="text-2xl font-bold text-gray-800">タグ一覧</h3>
-      <%= link_to new_tag_path, class: "px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors flex items-center gap-2 shadow-sm", data: { turbo_frame: "modal", action: "click->modal#open" } do %>
-        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
-        </svg>
-        新しいタグを作成
-      <% end %>
-    </div>
+<div class="bg-white rounded-lg border border-gray-200 p-6 max-w-7xl mx-auto">
+  <!-- タイトル行 -->
+  <div class="flex items-center justify-between mb-4">
+    <h3 class="text-2xl font-bold text-gray-800">タグ一覧</h3>
+    <%= link_to new_tag_path, class: "px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors flex items-center gap-2 shadow-sm", data: { turbo_frame: "modal" } do %>
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+      </svg>
+      新しいタグを作成
+    <% end %>
+  </div>
 
   <!-- indexアクションなどで複数のコレクションをレンダリングする際には以下の方が使える-->
   <div id="tags">
     <%= render @tags %>
   </div>
 
-    <!-- これはモーダル用のフレーム(最初は空) -->
-    <turbo-frame id="modal"></turbo-frame>
-  </div>
+  <!-- これはモーダル用のフレーム(最初は空) -->
+  <turbo-frame id="modal"></turbo-frame>
 </div>
