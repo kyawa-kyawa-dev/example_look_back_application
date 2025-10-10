@@ -30,7 +30,6 @@ class TagsController < ApplicationController
         format.turbo_stream do
           render turbo_stream: [
            turbo_stream.replace("flash", partial: "shared/flash_messages"),
-           # ここではturbo-frameで置き換えないと以降のリクエストがTurboFrameではなく、通常のリクエストになってしまう
            turbo_stream.replace("modal") { '<turbo-frame id="modal"></turbo-frame>'.html_safe }
           ], status: :unprocessable_entity
         end
