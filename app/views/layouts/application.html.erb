@@ -31,7 +31,10 @@
     <% else %>
       <%= render 'shared/header' %>
       <%= render 'shared/sidebar' %>
-      <main class="pt-20">
+
+      <!-- これはフラッシュメッセージ表示用の領域 -->
+      <div id="flash"></div>
+      <main class="mt-20">
         <%= yield %>
       </main>
     <% end %>

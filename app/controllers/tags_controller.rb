@@ -13,12 +13,28 @@ class TagsController < ApplicationController
     @tag = Tag.new(attrs)
 
     if @tag.save
+      # リダイレクト用にフラッシュメッセージを作成する
+      # TurboStreamを使用するから非同期ようにflash.nowを指定する
+      flash.now[:notice] = "タグが正常に作成されました!"
+
       respond_to do |format|
         format.turbo_stream
         format.html { redirect_to tags_path, notice: "タグが作成されました" }
       end
     else
-      render :new, status: :unprocessable_entity
+      # 失敗したとき用にもフラッシュメッセージを設定する
+      flash.now[:alert] = "タグの作成に失敗しました"
+
+      # ここでは明示的にturbo_streamで行う処理を実装している(フラッシュメッセージ・モーダルの削除)
+      respond_to do |format|
+        format.turbo_stream do
+          render turbo_stream: [
+           turbo_stream.replace("flash", partial: "shared/flash_messages"),
+           turbo_stream.replace("modal", "")
+          ], status: :unprocessable_entity
+        end
+        format.html { render :new, status: :unprocessable_entity }
+      end
     end
   end
 
