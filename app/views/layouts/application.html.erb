@@ -33,7 +33,7 @@
       <%= render 'shared/sidebar' %>
 
       <!-- これはフラッシュメッセージ表示用の領域 -->
-      <div id="flash"></div>
+      <div id="flash" data-controller="flash" data-flash-target="flash"></div>
       <main class="mt-20">
         <%= yield %>
       </main>
