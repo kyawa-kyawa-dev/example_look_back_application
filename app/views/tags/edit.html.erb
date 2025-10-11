@@ -1,5 +1,5 @@
-<turbo-frame id="modal">
-  <div class="fixed inset-0 flex items-center justify-center z-50">
+<turbo-frame id="modal" data-controller="modal">
+  <div class="fixed inset-0 flex items-center justify-center z-50" data-modal-target="child">
     <div class="bg-white rounded-lg border border-gray-200 p-6 max-w-3xl w-full mx-4">
     <!-- タイトル行 -->
     <div class="flex items-center justify-between mb-6">
@@ -37,7 +37,7 @@
 
         <!-- ボタン -->
         <div class="flex gap-3 pt-4">
-          <%= link_to "キャンセル", tags_path, class: "flex-1 px-6 py-3 border rounded-lg text-center hover:bg-gray-50" %>
+          <button type="button" class="flex-1 px-6 py-3 border rounded-lg text-center hover:bg-gray-50" data-action="click->modal#close">キャンセル</button>
           <%= f.submit "変更する", class: "flex-1 px-6 py-3 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors" %>
         </div>
       </div>
