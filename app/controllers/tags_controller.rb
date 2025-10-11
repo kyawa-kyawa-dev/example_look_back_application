@@ -38,6 +38,20 @@ class TagsController < ApplicationController
     end
   end
 
+  def edit
+    @tag = Tag.find(params[:id])
+  end
+
+  def update
+    @tag = Tag.find(params[:id])
+    
+    if @tag.update(permit_params)
+      flash.now[:notice] = "タグを更新しました"
+
+      
+    end
+  end
+
   def destroy
     tag = Tag.find(params[:id])
 
