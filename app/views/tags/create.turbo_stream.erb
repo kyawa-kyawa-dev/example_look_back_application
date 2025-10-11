@@ -1,7 +1,7 @@
 <%= turbo_stream.append "tags", partial: "tags/tag", locals: { tag: @tag } %>
 
 <%= turbo_stream.replace "modal" do %>
-  <turbo-frame id="modal"></turbo-frame>
+  <turbo-frame id="modal" data-controller="modal"></turbo-frame>
 <% end %>
 
 <%= turbo_stream.replace "flash", partial: "shared/flash_messages" %>
