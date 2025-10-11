@@ -47,8 +47,8 @@ class TagsController < ApplicationController
     
     if @tag.update(permit_params)
       flash.now[:notice] = "タグを更新しました"
-
-      
+    else
+      flash.now[:alert] = "タグの更新に失敗しました"
     end
   end
 

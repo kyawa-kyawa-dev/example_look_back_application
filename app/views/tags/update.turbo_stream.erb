@@ -1,5 +1,7 @@
-<%= turbo_stream.replace @tag.id, partial: "tags/tag", locals: { tag: @tag } %>
-
+<!-- タグの編集に成功した場合には対象のタグを書き換える -->
+<% if @tag.errors.blank? %>
+  <%= turbo_stream.replace @tag.id, partial: "tags/tag", locals: { tag: @tag } %>
+<% end %>
 <%= turbo_stream.replace "modal" do %>
   <turbo-frame id="modal"></turbo-frame>
 <% end %>
