@@ -21,6 +21,9 @@
     <div class="flex items-center gap-2">
       <span class="text-xs text-gray-400 font-mono"><%= tag.color %></span>
 
+      <!-- タグ詳細 -->
+      <%= link_to "詳細", tag_path(tag) , class: "p-2 text-gray-600 hover:bg-gray-100 rounded transition-colors" %>
+
       <!-- 編集ボタン -->
       <button class="p-2 text-gray-600 hover:bg-gray-100 rounded transition-colors">
         <%= link_to edit_tag_path(tag), data: { turbo_frame: "modal" } do %>
