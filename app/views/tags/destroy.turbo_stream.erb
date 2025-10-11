@@ -1,0 +1,6 @@
+<!-- タグの編集に成功した場合には対象のタグを書き換える -->
+<% if @tag.errors.blank? %>
+  <%= turbo_stream.remove @tag.id %>
+<% end %>
+
+<%= turbo_stream.replace "flash", partial: "shared/flash_messages" %>

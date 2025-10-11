@@ -53,12 +53,12 @@ class TagsController < ApplicationController
   end
 
   def destroy
-    tag = Tag.find(params[:id])
+    @tag = Tag.find(params[:id])
 
-    if tag.destroy
-      redirect_to tags_path, notice: 'tagを削除しました'
+    if @tag.destroy
+      flash.now[:notice] = 'タグを削除しました'
     else
-      render :index, alerts: 'tagの削除に失敗しました'
+      flash.now[:alert] = 'タグの削除に失敗しました'
     end
   end
 
