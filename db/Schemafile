@@ -24,7 +24,6 @@ create_table "knowledges", force: :cascade do |t|
   t.bigint "user_id", null: false
   t.string "title", limit: 255, null: false
   t.text "body"
-  t.string "context", limit: 20, null: false, default: "other"
   t.string "context_url", limit: 500
   t.boolean "remind_after_3d", default: true
   t.boolean "remind_after_7d", default: true
@@ -32,6 +31,14 @@ create_table "knowledges", force: :cascade do |t|
   t.datetime "updated_at", null: false
 
   t.index ["user_id"], name: "index_knowledges_on_user_id"
+end
+
+create_table "context_references", force: :cascade do |t|
+  t.references "knowledge", null: false
+  t.string "url", limit: 500, null: false
+  t.string "title", limit: 255
+  t.datetime "created_at", null: false
+  t.datetime "updated_at", null: false
 end
 
 create_table "tags", force: :cascade do |t|
@@ -42,7 +49,6 @@ create_table "tags", force: :cascade do |t|
   t.datetime "updated_at", null: false
 
   t.index ["name"], name: "index_tags_on_name", unique: true
-  add_foreign_key :tags, :users
 end
 
 create_table "knowledge_tags", force: :cascade do |t|
@@ -64,7 +70,10 @@ create_table "reminders", force: :cascade do |t|
   t.index ["knowledge_id"], name: "index_reminders_on_knowledge_id"
 end
 
+add_foreign_key "context_references", "knowledges"
 add_foreign_key "knowledges", "users"
 add_foreign_key "knowledge_tags", "knowledges"
 add_foreign_key "knowledge_tags", "tags"
 add_foreign_key "reminders", "knowledges"
+add_foreign_key "tags", "users"
+
