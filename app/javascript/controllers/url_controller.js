@@ -1,7 +1,7 @@
 import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
-  static targets = ["button", "container"]
+  static targets = ["button", "url", "delete", "container"]
 
   add () {
     // url_fieldを追加する親要素を取得
@@ -33,5 +33,13 @@ export default class extends Controller {
     // containerの末尾に挿入
     // insertAdjacentElement("beforebegin")ではbuttonTargetの開始タグの前にwrapperを挿入する
     this.buttonTarget.insertAdjacentElement("beforebegin", wrapper)
+  }
+
+  delete () {
+    const url = this.urlTarget
+    // クリックされたURL入力欄を削除する
+    url.remove()
+
+    console.log("クリックされました")
   }
 }
