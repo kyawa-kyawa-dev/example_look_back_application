@@ -1,6 +1,27 @@
-<button type="button" class="px-4 py-2 rounded-full font-medium text-sm transition-all opacity-70 hover:opacity-100"
-    style="background-color: <%= tag.color %>20; color: <%= tag.color %>; border-color: <%= tag.color %>40; border: 1px solid;">
-  <span class="flex items-center gap-2">
-    <span><%= "/##{tag.name}" %></span>
-  </span>
-</button>
+<div data-controller="knowledge">
+  <button 
+    type="button"
+    id="<%= tag.id %>"
+    class="px-4 py-2 rounded-full font-medium text-sm transition-all opacity-70 hover:opacity-100 cursor-pointer"
+    style="background-color: <%= tag.color %>20; color: <%= tag.color %>; border-color: <%= tag.color %>; border: 1px solid;"
+    data-knowledge-target="tag" 
+    data-action="click->knowledge#select">
+    <span class="flex items-center gap-2">
+      <!-- チェックマーク -->
+      <svg data-knowledge-checkmark class="w-4 h-4 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+      </svg>
+      <span>#<%= tag.name %></span>
+      <!-- ×ボタン -->
+      <span data-knowledge-close class="ml-1 hover:bg-black hover:bg-opacity-10 rounded-full px-1 hidden cursor-pointer">
+        ×
+      </span>
+    </span>
+  </button>
+  
+  <input 
+    type="hidden" 
+    id="<%= tag.id %>" 
+    value="" 
+    data-knowledge-target="hidden">
+</div>
