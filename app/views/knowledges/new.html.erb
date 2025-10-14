@@ -64,13 +64,6 @@
             <div class="flex flex-wrap gap-2">
               <%= render partial: "tag", collection: @tags %>
             </div>
-
-            <!-- さらに表示ボタン -->
-            <% if @tags.count - 5 > 0 %>
-              <button type="button" class="w-full py-2 px-4 border-2 border-dashed border-gray-300 text-gray-600 rounded-lg hover:border-indigo-400 hover:text-indigo-600 hover:bg-indigo-50 transition-all font-medium text-sm">
-                <%= "さらに表示(#{@tags.count - 5})" %>
-              </button>
-            <% end %>
           </div>
         </div>
 
