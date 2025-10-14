@@ -18,4 +18,11 @@
 #  fk_rails_...  (knowledge_id => knowledges.id)
 #
 class Reminder < ApplicationRecord
+  enum :remind_type, {
+    three: 1,
+    seven: 2,
+    custom: 3
+  }
+
+  belongs_to :knowledge
 end
