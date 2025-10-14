@@ -30,10 +30,10 @@ class KnowledgesController < ApplicationController
 
     if @new_knowledge.errors.blank?
       # ナレッジのコンテキストを追加する
-      @new_knowledge.add_context_references(permit_params[:urls])
+      register_context_references(@new_knowledge, permit_params[:urls])
 
       # ナレッジのリマインダーを登録する
-      @new_knowledge.register_reminders(three: permit_params[:notify_3days], seven: permit_params[:notify_7days])
+      register_reminders(@new_knowledge, three: permit_params[:notify_3days], seven: permit_params[:notify_7days])
 
       redirect_to @new_knowledge, notice: "ナレッジを追加しました"
     else
@@ -67,5 +67,31 @@ class KnowledgesController < ApplicationController
   def render_with_flash_message(type, action, message, status)
     flash.now[type] = message
     render action, status
+  end
+
+  def register_context_references(knowledge, urls)
+    return if urls.blank?
+
+    unique_urls = urls.compact_blank.to_set.to_a
+
+    context_references = unique_urls.map do |url|
+      { url: url }
+    end
+
+    knowledge.context_references.create(context_references)
+  end
+
+  def register_reminders(knowledge, three:, seven:)
+    reminder_datas = { three: three, seven: seven}.map do |day, value|
+      next if value == "0"
+
+      if day == :three
+        { scheduled_at: knowledge.created_at + 3.days, remind_type: :three }
+      elsif day == :seven
+        { scheduled_at: knowledge.created_at + 7.days, remind_type: :seven }
+      end
+    end.compact
+
+    knowledge.reminders.create(reminder_datas) if reminder_datas.present?
   end
 end
