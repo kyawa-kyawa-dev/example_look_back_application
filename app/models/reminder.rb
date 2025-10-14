@@ -6,7 +6,7 @@
 #  opened_at    :datetime
 #  remind_type  :integer          not null
 #  scheduled_at :datetime         not null
-#  sent_at      :datetime         not null
+#  sent_at      :datetime
 #  knowledge_id :bigint           not null
 #
 # Indexes

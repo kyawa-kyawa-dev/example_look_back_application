@@ -61,7 +61,7 @@ create_table "reminders", force: :cascade do |t|
   t.bigint "knowledge_id", null: false
   t.datetime "scheduled_at", null: false 
   t.integer "remind_type", null: false
-  t.datetime "sent_at", null: false
+  t.datetime "sent_at"
   t.datetime "opened_at"
 
   t.index ["knowledge_id"], name: "index_reminders_on_knowledge_id"
