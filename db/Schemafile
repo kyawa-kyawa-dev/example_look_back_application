@@ -24,7 +24,6 @@ create_table "knowledges", force: :cascade do |t|
   t.bigint "user_id", null: false
   t.string "title", limit: 255, null: false
   t.text "body"
-  t.string "context_url", limit: 500
   t.datetime "created_at", null: false
   t.datetime "updated_at", null: false
 
