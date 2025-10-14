@@ -27,7 +27,9 @@ class Knowledge < ApplicationRecord
   validates :title, presence: true
 
   def add_context_references(urls)
-    context_references = urls.map do |url|
+    unique_urls = urls.to_set.to_a
+
+    context_references = unique_urls.map do |url|
       { url: url, knowledge_id: self.id }
     end
 
