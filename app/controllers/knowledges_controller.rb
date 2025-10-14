@@ -14,7 +14,13 @@ class KnowledgesController < ApplicationController
   end
 
   def create
-    existing_tag_ids = permit_params[:tag_ids]&.map(&:to_i)
+    if has_tags?(permit_params)
+      existing_tag_ids = permit_params[:tag_ids]&.map(&:to_i)
+    else
+      set_objects_with_current_input(permit_params)
+      flash.now[:alert] = "ナレッジの作成に失敗しました"
+      return render :new, status: :unprocessable_entity
+    end
 
     @new_knowledge = Knowledge.create(
       user_id: current_user.id,
@@ -27,10 +33,9 @@ class KnowledgesController < ApplicationController
       @new_knowledge.add_context_references(permit_params[:urls])
       redirect_to @new_knowledge, notice: "ナレッジを追加しました"
     else
-      @knowledge = Knowledge.new
-      @tags = Tag.where(user_id: current_user.id)
+      set_objects_with_current_input(permit_params)
       flash.now[:alert] = "ナレッジの作成に失敗しました"
-      render :new, status: :unprocessable_entity
+      return render :new, status: :unprocessable_entity
     end
   end
 
@@ -38,6 +43,20 @@ class KnowledgesController < ApplicationController
 
   def permit_params
     # 今回のurlsのように値が配列で送信されている際には、配列形式で取得する必要があるらしい
-    params.require(:knowledge).permit(:title, :content, urls: [], tag_ids: [])
+    params.require(:knowledge).permit(:title, :body, urls: [], tag_ids: [])
+  end
+
+  def has_tags?(params)
+    # タグが選択されていない場合にはtag_idsキーが存在しない
+    params.has_key?(:tag_ids)
+  end
+
+  # 現在入力されている値でオブジェクトを作成する
+  def set_objects_with_current_input(params)
+    @knowledge = Knowledge.new(
+      title: permit_params[:title],
+      body: permit_params[:body]
+    )
+    @tags = Tag.where(user_id: current_user.id)
   end
 end
