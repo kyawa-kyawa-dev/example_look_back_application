@@ -41,7 +41,7 @@ class KnowledgesController < ApplicationController
 
   def permit_params
     # 今回のurlsのように値が配列で送信されている際には、配列形式で取得する必要があるらしい
-    params.require(:knowledge).permit(:title, :body, urls: [], tag_ids: [])
+    params.require(:knowledge).permit(:title, :body, :notify_3days, :notify_7days, urls: [], tag_ids: [])
   end
 
   def has_tags?(params)

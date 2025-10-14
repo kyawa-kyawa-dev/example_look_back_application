@@ -74,6 +74,35 @@
           </div>
         </div>
 
+        <!-- 通知設定 -->
+        <div>
+          <label class="block text-sm font-semibold text-gray-700 mb-3">
+            復習通知
+          </label>
+          <div class="space-y-3">
+            <div class="flex items-start">
+              <%= f.check_box :notify_3days, class: "w-4 h-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500 mt-1" %>
+              <%= f.label :notify_3days, class: "ml-3 text-sm text-gray-700" do %>
+                <span class="font-medium">3日後に通知</span>
+                <span class="text-gray-500 block text-xs mt-0.5">3日後に復習のリマインドを受け取ります</span>
+              <% end %>
+            </div>
+            <div class="flex items-start">
+              <%= f.check_box :notify_7days, class: "w-4 h-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500 mt-1" %>
+              <%= f.label :notify_7days, class: "ml-3 text-sm text-gray-700" do %>
+                <span class="font-medium">7日後に通知</span>
+                <span class="text-gray-500 block text-xs mt-0.5">1週間後に復習のリマインドを受け取ります</span>
+              <% end %>
+            </div>
+          </div>
+          <p class="text-xs text-gray-500 mt-3 flex items-center gap-1">
+            <svg class="w-4 h-4 inline text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            エビングハウスの忘却曲線に基づいた復習タイミングで知識を定着させます
+          </p>
+        </div>
+
         <!-- アクションボタン -->
         <div class="flex gap-3 pt-6 border-t">
           <%= link_to "キャンセル", knowledges_path, 
@@ -98,6 +127,7 @@
           <li>• 後で検索しやすいように、具体的なタイトルをつけましょう</li>
           <li>• 複数の参考URLを追加できます</li>
           <li>• Myタグから関連するタグを選択してください</li>
+          <li>• 通知設定で自動的に復習のタイミングをお知らせします</li>
         </ul>
       </div>
     </div>
