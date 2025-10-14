@@ -33,7 +33,6 @@ end
 create_table "context_references", force: :cascade do |t|
   t.references "knowledge", null: false
   t.string "url", limit: 500, null: false
-  t.string "title", limit: 255
   t.datetime "created_at", null: false
   t.datetime "updated_at", null: false
 end

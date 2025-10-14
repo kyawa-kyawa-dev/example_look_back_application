@@ -3,7 +3,6 @@
 # Table name: context_references
 #
 #  id           :bigint           not null, primary key
-#  title        :string(255)
 #  url          :string(500)      not null
 #  created_at   :datetime         not null
 #  updated_at   :datetime         not null
