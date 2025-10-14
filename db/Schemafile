@@ -60,7 +60,7 @@ end
 create_table "reminders", force: :cascade do |t|
   t.bigint "knowledge_id", null: false
   t.datetime "scheduled_at", null: false 
-  t.string "remind_type", limit: 20, null: false
+  t.integer "remind_type", null: false
   t.datetime "sent_at", null: false
   t.datetime "opened_at"
 
