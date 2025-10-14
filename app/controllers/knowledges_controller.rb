@@ -18,8 +18,7 @@ class KnowledgesController < ApplicationController
       existing_tag_ids = permit_params[:tag_ids]&.map(&:to_i)
     else
       set_objects_with_current_input(permit_params)
-      flash.now[:alert] = "ナレッジの作成に失敗しました"
-      return render :new, status: :unprocessable_entity
+      return render_with_flash_message(:alert, :new, "ナレッジの作成に失敗しました", status: :unprocessable_entity)
     end
 
     @new_knowledge = Knowledge.create(
@@ -34,8 +33,7 @@ class KnowledgesController < ApplicationController
       redirect_to @new_knowledge, notice: "ナレッジを追加しました"
     else
       set_objects_with_current_input(permit_params)
-      flash.now[:alert] = "ナレッジの作成に失敗しました"
-      return render :new, status: :unprocessable_entity
+      render_with_flash_message(:alert, :new, "ナレッジの作成に失敗しました", status: :unprocessable_entity)
     end
   end
 
@@ -58,5 +56,11 @@ class KnowledgesController < ApplicationController
       body: permit_params[:body]
     )
     @tags = Tag.where(user_id: current_user.id)
+  end
+
+  # 指定された組み合わせでフラッシュメッセージを設定して、renderメソッドを呼び出す
+  def render_with_flash_message(type, action, message, status)
+    flash.now[type] = message
+    render action, status
   end
 end
