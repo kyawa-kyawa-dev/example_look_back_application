@@ -27,6 +27,8 @@ class KnowledgesController < ApplicationController
       @new_knowledge.add_context_references(permit_params[:urls])
       redirect_to @new_knowledge, notice: "ナレッジを追加しました"
     else
+      @knowledge = Knowledge.new
+      @tags = Tag.where(user_id: current_user.id)
       flash.now[:alert] = "ナレッジの作成に失敗しました"
       render :new, status: :unprocessable_entity
     end

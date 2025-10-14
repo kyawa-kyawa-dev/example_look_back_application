@@ -23,6 +23,8 @@ class Knowledge < ApplicationRecord
   has_many :knowledge_tags, dependent: :destroy
   has_many :tags, through: :knowledge_tags
 
+  validates :title, presence: true
+
   def add_context_references(urls)
     context_references = urls.map do |url|
       { title: "" , url: url, knowledge_id: self.id }
