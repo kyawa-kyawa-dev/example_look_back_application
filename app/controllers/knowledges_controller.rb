@@ -29,7 +29,12 @@ class KnowledgesController < ApplicationController
     )
 
     if @new_knowledge.errors.blank?
+      # ナレッジのコンテキストを追加する
       @new_knowledge.add_context_references(permit_params[:urls])
+
+      # ナレッジのリマインダーを登録する
+      @new_knowledge.register_reminders(three: permit_params[:notify_3days], seven: permit_params[:notify_7days])
+
       redirect_to @new_knowledge, notice: "ナレッジを追加しました"
     else
       set_objects_with_current_input(permit_params)
