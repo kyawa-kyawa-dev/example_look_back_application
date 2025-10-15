@@ -48,11 +48,21 @@ class TagsController < ApplicationController
 
   def update
     @tag = Tag.find(params[:id])
-    
+
     if @tag.update(permit_params)
       flash.now[:notice] = "タグを更新しました"
+      respond_to do |format|
+        format.turbo_stream
+        format.html { redirect_to tags_path, notice: "タグを更新しました" }
+      end
     else
       flash.now[:alert] = "タグの更新に失敗しました"
+      respond_to do |format|
+        format.turbo_stream do
+          render turbo_stream: turbo_stream.replace("flash", partial: "shared/flash_messages"), status: :unprocessable_entity
+        end
+        format.html { render :edit, status: :unprocessable_entity }
+      end
     end
   end
 
@@ -61,8 +71,18 @@ class TagsController < ApplicationController
 
     if @tag.destroy
       flash.now[:notice] = 'タグを削除しました'
+      respond_to do |format|
+        format.turbo_stream
+        format.html { redirect_to tags_path, notice: 'タグを削除しました' }
+      end
     else
       flash.now[:alert] = 'タグの削除に失敗しました'
+      respond_to do |format|
+        format.turbo_stream do
+          render turbo_stream: turbo_stream.replace("flash", partial: "shared/flash_messages"), status: :unprocessable_entity
+        end
+        format.html { redirect_to tags_path, alert: 'タグの削除に失敗しました' }
+      end
     end
   end
 
