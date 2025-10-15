@@ -37,9 +37,15 @@
 
       <!-- これは通常のフラッシュメッセージ表示領域 -->
       <%= render 'shared/flash' %>
-      <main class="mt-20">
-        <%= yield %>
-      </main>
+      <% if flash.present? %>
+        <main class="">
+          <%= yield %>
+        </main>
+      <% else %>
+        <main class="mt-20">
+          <%= yield %>
+        </main>
+      <% end %>
     <% end %>
   </body>
 </html>
