@@ -32,8 +32,11 @@
       <%= render 'shared/header' %>
       <%= render 'shared/sidebar' %>
 
-      <!-- これはフラッシュメッセージ表示用の領域 -->
+      <!-- これはTurboStreamw用いたフラッシュメッセージ表示用の領域 -->
       <div id="flash" data-controller="flash" data-flash-target="flash"></div>
+
+      <!-- これは通常のフラッシュメッセージ表示領域 -->
+      <%= render 'shared/flash' %>
       <main class="mt-20">
         <%= yield %>
       </main>
