@@ -22,30 +22,28 @@
     <%= javascript_importmap_tags %>
   </head>
 
-  <body data-controller="sidebar-toggle">
+  <body data-controller="sidebar-toggle flash" class="<%= 'overflow-hidden h-screen' if controller_name == 'sessions' && action_name == 'new' %>">
     <% if controller_name == 'static_pages' && action_name == 'home' %>
       <%= render 'shared/header_for_top' %>
       <main>
         <%= yield %>
       </main>
+    <% elsif controller_name == 'sessions' && action_name == 'new' %>
+      <!-- ログインページはヘッダー表示・スクロールなし -->
+      <%= render 'shared/header' %>
+      <%= yield %>
     <% else %>
       <%= render 'shared/header' %>
       <%= render 'shared/sidebar' %>
 
-      <!-- これはTurboStreamw用いたフラッシュメッセージ表示用の領域 -->
-      <div id="flash" data-controller="flash" data-flash-target="flash"></div>
+      <div class="pt-16">
+        <!-- フラッシュメッセージ表示領域（通常とTurboStream両方に対応） -->
+        <%= render 'shared/flash' %>
 
-      <!-- これは通常のフラッシュメッセージ表示領域 -->
-      <%= render 'shared/flash' %>
-      <% if flash.present? %>
-        <main class="">
+        <main>
           <%= yield %>
         </main>
-      <% else %>
-        <main class="mt-20">
-          <%= yield %>
-        </main>
-      <% end %>
+      </div>
     <% end %>
   </body>
 </html>
