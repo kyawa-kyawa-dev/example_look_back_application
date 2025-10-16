@@ -31,7 +31,13 @@
     <% elsif controller_name == 'sessions' && action_name == 'new' %>
       <!-- ログインページはヘッダー表示・スクロールなし -->
       <%= render 'shared/header' %>
-      <%= yield %>
+
+      <div class="pt-16">
+        <!-- フラッシュメッセージ表示領域 -->
+        <%= render 'shared/flash' %>
+
+        <%= yield %>
+      </div>
     <% else %>
       <%= render 'shared/header' %>
       <%= render 'shared/sidebar' %>
