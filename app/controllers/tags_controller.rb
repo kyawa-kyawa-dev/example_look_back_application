@@ -5,7 +5,15 @@ class TagsController < ApplicationController
   end
 
   def show
+    # ここではタグに紐づいているナレッジも取得したい
     @tag = Tag.find(params[:id])
+
+    knowledges_scope = @tag.knowledges.left_joins(:reminders)
+
+    @total_count = knowledges_scope.count
+    @this_week_count = knowledges_scope.where('knowledges.created_at >= ?', 1.week.ago).count
+    @this_month_count = knowledges_scope.where('knowledges.created_at >= ?', 1.month.ago).count
+    @not_reviewed_count = knowledges_scope.where('reminders.sent_at IS NULL OR reminders.opened_at IS NULL').count
   end
 
   def new
