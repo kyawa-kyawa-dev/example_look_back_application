@@ -61,111 +61,14 @@
         </select>
       </div>
       <div class="text-sm text-gray-600">
-        5件のナレッジ
+        <%= @knowledges_scope.count %> 件のナレッジ
       </div>
     </div>
 
     <!-- ナレッジ一覧 -->
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-      <!-- ナレッジカード1 -->
-      <a href="#" class="bg-white rounded-lg border border-gray-200 p-4 hover:shadow-md cursor-pointer transition-shadow">
-        <div class="flex items-start justify-between mb-3">
-          <h3 class="font-semibold text-gray-800 flex-1">Railsのルーティング設定</h3>
-          <span class="px-2 py-1 bg-purple-100 text-purple-700 text-base rounded-full ml-2 flex-shrink-0">
-            学習メモ
-          </span>
-        </div>
-        <p class="text-sm text-gray-600 mb-3">namespace :admin でネスト構造を作成できる</p>
-        <div class="flex items-center justify-between">
-          <span 
-            class="px-3 py-1 text-sm rounded-full font-medium"
-            style="background-color: #EF444420; color: #EF4444; border: 1px solid #EF444440;"
-          >
-            #Rails
-          </span>
-          <span class="text-base text-gray-500">2日前</span>
-        </div>
-      </a>
-
-      <!-- ナレッジカード2 -->
-      <a href="#" class="bg-white rounded-lg border border-gray-200 p-4 hover:shadow-md cursor-pointer transition-shadow">
-        <div class="flex items-start justify-between mb-3">
-          <h3 class="font-semibold text-gray-800 flex-1">Railsでのバリデーション実装</h3>
-          <span class="px-2 py-1 bg-purple-100 text-purple-700 text-base rounded-full ml-2 flex-shrink-0">
-            エラー解決
-          </span>
-        </div>
-        <p class="text-sm text-gray-600 mb-3">validates :email, presence: true を使用してメールアドレスの必須チェックを実装</p>
-        <div class="flex items-center justify-between">
-          <span 
-            class="px-3 py-1 text-sm rounded-full font-medium"
-            style="background-color: #EF444420; color: #EF4444; border: 1px solid #EF444440;"
-          >
-            #Rails
-          </span>
-          <span class="text-base text-gray-500">5日前</span>
-        </div>
-      </a>
-
-      <!-- ナレッジカード3 -->
-      <a href="#" class="bg-white rounded-lg border border-gray-200 p-4 hover:shadow-md cursor-pointer transition-shadow">
-        <div class="flex items-start justify-between mb-3">
-          <h3 class="font-semibold text-gray-800 flex-1">ActiveRecordの関連付け</h3>
-          <span class="px-2 py-1 bg-purple-100 text-purple-700 text-base rounded-full ml-2 flex-shrink-0">
-            学習メモ
-          </span>
-        </div>
-        <p class="text-sm text-gray-600 mb-3">has_many と belongs_to の使い分けについて</p>
-        <div class="flex items-center justify-between">
-          <span 
-            class="px-3 py-1 text-sm rounded-full font-medium"
-            style="background-color: #EF444420; color: #EF4444; border: 1px solid #EF444440;"
-          >
-            #Rails
-          </span>
-          <span class="text-base text-gray-500">1週間前</span>
-        </div>
-      </a>
-
-      <!-- ナレッジカード4 -->
-      <a href="#" class="bg-white rounded-lg border border-gray-200 p-4 hover:shadow-md cursor-pointer transition-shadow">
-        <div class="flex items-start justify-between mb-3">
-          <h3 class="font-semibold text-gray-800 flex-1">Railsのマイグレーション</h3>
-          <span class="px-2 py-1 bg-purple-100 text-purple-700 text-base rounded-full ml-2 flex-shrink-0">
-            新機能実装
-          </span>
-        </div>
-        <p class="text-sm text-gray-600 mb-3">rails g migration でテーブル構造を変更する方法</p>
-        <div class="flex items-center justify-between">
-          <span 
-            class="px-3 py-1 text-sm rounded-full font-medium"
-            style="background-color: #EF444420; color: #EF4444; border: 1px solid #EF444440;"
-          >
-            #Rails
-          </span>
-          <span class="text-base text-gray-500">1週間前</span>
-        </div>
-      </a>
-
-      <!-- ナレッジカード5 -->
-      <a href="#" class="bg-white rounded-lg border border-gray-200 p-4 hover:shadow-md cursor-pointer transition-shadow">
-        <div class="flex items-start justify-between mb-3">
-          <h3 class="font-semibold text-gray-800 flex-1">Railsのコールバック</h3>
-          <span class="px-2 py-1 bg-purple-100 text-purple-700 text-base rounded-full ml-2 flex-shrink-0">
-            学習メモ
-          </span>
-        </div>
-        <p class="text-sm text-gray-600 mb-3">before_save, after_create などの使い方とタイミング</p>
-        <div class="flex items-center justify-between">
-          <span 
-            class="px-3 py-1 text-sm rounded-full font-medium"
-            style="background-color: #EF444420; color: #EF4444; border: 1px solid #EF444440;"
-          >
-            #Rails
-          </span>
-          <span class="text-base text-gray-500">2週間前</span>
-        </div>
-      </a>
+      <!-- これはTagに関連づいたKnowledgeを一覧で表示するためのパーシャル -->
+      <%= render partial: 'knowledge', collection: @knowledges_scope %>
     </div>
   </div>
 </main>

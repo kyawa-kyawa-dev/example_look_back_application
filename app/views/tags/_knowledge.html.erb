@@ -1,0 +1,19 @@
+<%= link_to knowledge_path(knowledge), class: "bg-white rounded-lg border border-gray-200 p-4 hover:shadow-md cursor-pointer transition-shadow" do %>
+    <div class="flex items-start justify-between mb-3">
+        <h3 class="font-semibold text-gray-800 flex-1"><%= knowledge.title %></h3>
+    </div>
+    <p class="text-sm text-gray-600 mb-3"><%= knowledge.body %></p>
+    <div class="flex items-center justify-between">
+        <span 
+          class="px-3 py-1 text-sm rounded-full font-medium"
+          style="background-color: <%= @tag.color %>20; color: <%= @tag.color %>; border-color: <%= @tag.color %>40;"
+        >
+          <%= @tag.name %>
+        </span>
+        <% if (Time.current - knowledge.created_at) > SECONDS_PER_DAY  %>
+          <span class="text-base text-gray-500"><%= ((Time.current - knowledge.created_at) / SECONDS_PER_DAY).floor %>日前</span>
+        <% else %>
+          <span class="text-base text-gray-500">今日</span>
+        <% end %>
+    </div>
+<% end %>
