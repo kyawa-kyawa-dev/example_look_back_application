@@ -1,6 +1,6 @@
 class KnowledgesController < ApplicationController
   def index
-    # ここでは登録したナレッジを一覧表示するためのアクション
+    @today_knowledges = Knowledge.where(user_id: current_user.id).where(created_at: Time.current.all_day)
   end
 
   def show
