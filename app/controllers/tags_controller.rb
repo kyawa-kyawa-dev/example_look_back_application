@@ -5,10 +5,16 @@ class TagsController < ApplicationController
   end
 
   def show
+    # もしソートの基準が選択されている場合には取得する
+    sort_option = params[:sort] || "newest"
     # ここではタグに紐づいているナレッジも取得したい
     @tag = Tag.find(params[:id])
 
-    @knowledges_scope = @tag.knowledges.left_joins(:reminders)
+    # ソートの条件に応じてソートする
+    @knowledges_scope = 
+      sort_option == "newest" ?
+        @tag.knowledges.left_joins(:reminders).order(created_at: :desc) : 
+        @tag.knowledges.left_joins(:reminders).order(created_at: :asc)
 
     @total_count = @knowledges_scope.count
     @this_week_count = @knowledges_scope.where('knowledges.created_at >= ?', 1.week.ago).count
