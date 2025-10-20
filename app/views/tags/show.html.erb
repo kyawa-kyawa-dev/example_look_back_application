@@ -42,16 +42,9 @@
     <!-- フィルター & ソート -->
     <div class="flex items-center justify-between mb-6">
       <div class="flex gap-3">
-        <select class="px-4 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500">
-          <option>全てのコンテキスト</option>
-          <option>エラー解決</option>
-          <option>新機能実装</option>
-          <option>リファクタリング</option>
-          <option>学習メモ</option>
-        </select>
-        <select class="px-4 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500">
-          <option>最新順</option>
-          <option>古い順</option>
+        <select data-controller="sort-tag" data-sort-tag-target="select" data-action="change->sort-tag#option" id="sort-selected" class="px-4 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500">
+          <option value="newest" selected>最新順</option>
+          <option value="oldest">古い順</option>
         </select>
       </div>
       <div class="text-sm text-gray-600">
