@@ -3,9 +3,9 @@
   <div class="max-w-6xl mx-auto">
     <!-- タグヘッダー（中央寄せ・横幅小さく・縦方向は元の大きさ） -->
     <div class="max-w-3xl mx-auto bg-white rounded-lg border p-6 mb-6">
-      <div class="flex items-center justify-between mb-4">
-        <div class="flex items-center gap-4">
-          <div 
+      <div class="mb-4">
+        <div class="flex items-center justify-center gap-4">
+          <div
             class="w-16 h-16 rounded-full flex items-center justify-center text-2xl font-bold text-white"
             style="background-color: <%= @tag.color %>;"
           >
@@ -16,12 +16,6 @@
             <p class="text-gray-600"><%= "#{@total_count}件のナレッジ" %></p>
           </div>
         </div>
-        <a href="#" class="px-6 py-3 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 font-medium shadow-md transition-colors flex items-center gap-2">
-          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
-          </svg>
-          ナレッジを追加
-        </a>
       </div>
 
       <!-- 統計情報（横一列） -->
