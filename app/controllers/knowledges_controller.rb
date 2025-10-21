@@ -8,7 +8,7 @@ class KnowledgesController < ApplicationController
 
   def show
     # ここでは個別のナレッジを表示する
-    @knowledge = Knowledge.find(params[:id])
+    @knowledge = Knowledge.includes(:tags, :context_references, :reminders).find(params[:id])
   end
 
   def new
