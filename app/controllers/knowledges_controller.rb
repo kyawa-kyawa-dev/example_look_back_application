@@ -1,6 +1,9 @@
 class KnowledgesController < ApplicationController
   def index
-    @today_knowledges = Knowledge.where(user_id: current_user.id).where(created_at: Time.current.all_day)
+    # ナレッジに紐づいたすべての情報を一括で取得する
+    @today_knowledges = Knowledge.where(user_id: current_user.id)
+                                 .where(created_at: Time.current.all_day)
+                                 .includes(:tags)
   end
 
   def show
