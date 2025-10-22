@@ -24,10 +24,11 @@ class KnowledgesController < ApplicationController
       return render_with_flash_message(:alert, :new, "ナレッジの作成に失敗しました", status: :unprocessable_entity)
     end
 
+
     @new_knowledge = Knowledge.create(
       user_id: current_user.id,
       title: permit_params[:title],
-      body: permit_params[:content],
+      body: permit_params[:body],
       tag_ids: existing_tag_ids
     )
 
