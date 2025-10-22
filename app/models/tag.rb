@@ -22,5 +22,5 @@ class Tag < ApplicationRecord
   belongs_to :user
   has_many :knowledge_tags, dependent: :destroy
   has_many :knowledges, through: :knowledge_tags
-  validates :name, uniqueness: true
+  validates :name, uniqueness: true, length: { maximum: 50, message: "タグに登録できる最大文字数は50文字です" }
 end
