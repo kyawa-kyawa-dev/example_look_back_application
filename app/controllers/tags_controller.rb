@@ -1,7 +1,7 @@
 class TagsController < ApplicationController
   def index
     # ここでは登録済みのタグを一覧で表示
-    @tags = Tag.where(user_id: current_user.id)
+    @tags = Tag.includes(:knowledges).where(user_id: current_user.id)
   end
 
   def show
