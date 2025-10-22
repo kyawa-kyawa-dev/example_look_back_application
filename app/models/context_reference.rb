@@ -18,4 +18,8 @@
 #
 class ContextReference < ApplicationRecord
   belongs_to :knowledge
+
+  validates :url, presence: true, length: { maximum: 500 , message: "500文字以上のURLは登録できません" },
+                  format: { with: URI::DEFAULT_PARSER.make_regexp("https"), message: "入力されたURLは不正な形式です" }
+
 end
