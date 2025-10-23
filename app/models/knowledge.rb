@@ -24,5 +24,5 @@ class Knowledge < ApplicationRecord
   has_many :tags, through: :knowledge_tags
   has_many :reminders, dependent: :destroy
 
-  validates :title, presence: true
+  validates :title, presence: { message: "タイトルを入力してください" }
 end
