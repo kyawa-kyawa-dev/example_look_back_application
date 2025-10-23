@@ -17,38 +17,45 @@ class KnowledgesController < ApplicationController
   end
 
   def create
-    if has_tags?(permit_params)
-      existing_tag_ids = permit_params[:tag_ids]&.map(&:to_i)
-    else
-      # @knowledgeに対してタグが選択されていないことを伝えるメッセージを追加する
-      @knowledge = Knowledge.new(
-        title: permit_params[:title],
-        body: permit_params[:body]
-      )
-      @knowledge.errors.add(:base, "タグは最低一つ選択してください")
-      @tags = Tag.where(user_id: current_user.id)
+    existing_tag_ids = has_tags?(permit_params) ? permit_params[:tag_ids]&.map(&:to_i) : []
+    # ContextReference, Reminderが正常に作成されないとKnowledgeが作成されないようにする
+    ActiveRecord::Base.transaction do
+      @knowledge =
+        if existing_tag_ids.any?
+          Knowledge.create!(
+            user_id: current_user.id,
+            title: permit_params[:title],
+            body: permit_params[:body],
+            tag_ids: existing_tag_ids
+          )
+        else
+          Knowledge.create!(
+            user_id: current_user.id,
+            title: permit_params[:title],
+            body: permit_params[:body]
+          )
+        end
 
-      return render :new, status: :unprocessable_entity
+      register_context_references(@knowledge, permit_params[:urls])
+      register_reminders(@knowledge, three: permit_params[:notify_3days], seven: permit_params[:notify_7days])
     end
 
-    @knowledge = Knowledge.create(
-      user_id: current_user.id,
+    # トランザクションが成功した場合にのみナレッジ詳細にリダイレクトする
+    redirect_to @knowledge, notice: "ナレッジを追加しました"
+  rescue ActiveRecord::RecordInvalid => e
+    @knowledge = Knowledge.new(
       title: permit_params[:title],
-      body: permit_params[:body],
-      tag_ids: existing_tag_ids
+      body: permit_params[:body]
     )
 
-    if @knowledge.errors.blank?
-      # ナレッジのコンテキストを追加する
-      register_context_references(@knowledge, permit_params[:urls])
-
-      # ナレッジのリマインダーを登録する
-      register_reminders(@knowledge, three: permit_params[:notify_3days], seven: permit_params[:notify_7days])
-
-      redirect_to @knowledge, notice: "ナレッジを追加しました"
-    else
-      render :new, status: :unprocessable_entity
+    # ナレッジに関連するエラーが生じた場合には@knowledgeのエラーとしてレコードを返す
+    if e.record.errors.any?
+      e.record.errors.each do |error|
+        @knowledge.errors.add(:base, error.full_message)
+      end
     end
+    @tags = Tag.where(user_id: current_user.id)
+    return render :new, status: :unprocessable_entity
   end
 
   private
@@ -72,12 +79,7 @@ class KnowledgesController < ApplicationController
       { url: url }
     end
 
-    # ナレッジの追加の際にContextReferenceが正常に登録できなければリダイレクト
-    new_context_references = knowledge.context_references.build(context_references)
-    if new_context_references.all?(&:valid?)
-    else
-      return nil
-    end
+    new_context_references = knowledge.context_references.create!(context_references)
   end
 
   def register_reminders(knowledge, three:, seven:)
@@ -91,6 +93,6 @@ class KnowledgesController < ApplicationController
       end
     end.compact
 
-    knowledge.reminders.create(reminder_datas) if reminder_datas.present?
+    knowledge.reminders.create!(reminder_datas) if reminder_datas.present?
   end
 end
