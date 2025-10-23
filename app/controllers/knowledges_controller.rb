@@ -20,29 +20,34 @@ class KnowledgesController < ApplicationController
     if has_tags?(permit_params)
       existing_tag_ids = permit_params[:tag_ids]&.map(&:to_i)
     else
-      set_objects_with_current_input(permit_params)
-      return render_with_flash_message(:alert, :new, "ナレッジの作成に失敗しました", status: :unprocessable_entity)
+      # @knowledgeに対してタグが選択されていないことを伝えるメッセージを追加する
+      @knowledge = Knowledge.new(
+        title: permit_params[:title],
+        body: permit_params[:body]
+      )
+      @knowledge.errors.add(:base, "タグは最低一つ選択してください")
+      @tags = Tag.where(user_id: current_user.id)
+
+      return render :new, status: :unprocessable_entity
     end
 
-
-    @new_knowledge = Knowledge.create(
+    @knowledge = Knowledge.create(
       user_id: current_user.id,
       title: permit_params[:title],
       body: permit_params[:body],
       tag_ids: existing_tag_ids
     )
 
-    if @new_knowledge.errors.blank?
+    if @knowledge.errors.blank?
       # ナレッジのコンテキストを追加する
-      register_context_references(@new_knowledge, permit_params[:urls])
+      register_context_references(@knowledge, permit_params[:urls])
 
       # ナレッジのリマインダーを登録する
-      register_reminders(@new_knowledge, three: permit_params[:notify_3days], seven: permit_params[:notify_7days])
+      register_reminders(@knowledge, three: permit_params[:notify_3days], seven: permit_params[:notify_7days])
 
-      redirect_to @new_knowledge, notice: "ナレッジを追加しました"
+      redirect_to @knowledge, notice: "ナレッジを追加しました"
     else
-      set_objects_with_current_input(permit_params)
-      render_with_flash_message(:alert, :new, "ナレッジの作成に失敗しました", status: :unprocessable_entity)
+      render :new, status: :unprocessable_entity
     end
   end
 
@@ -58,21 +63,6 @@ class KnowledgesController < ApplicationController
     params.has_key?(:tag_ids)
   end
 
-  # 現在入力されている値でオブジェクトを作成する
-  def set_objects_with_current_input(params)
-    @knowledge = Knowledge.new(
-      title: permit_params[:title],
-      body: permit_params[:body]
-    )
-    @tags = Tag.where(user_id: current_user.id)
-  end
-
-  # 指定された組み合わせでフラッシュメッセージを設定して、renderメソッドを呼び出す
-  def render_with_flash_message(type, action, message, status)
-    flash.now[type] = message
-    render action, status
-  end
-
   def register_context_references(knowledge, urls)
     return if urls.blank?
 
@@ -82,7 +72,12 @@ class KnowledgesController < ApplicationController
       { url: url }
     end
 
-    knowledge.context_references.create(context_references)
+    # ナレッジの追加の際にContextReferenceが正常に登録できなければリダイレクト
+    new_context_references = knowledge.context_references.build(context_references)
+    if new_context_references.all?(&:valid?)
+    else
+      return nil
+    end
   end
 
   def register_reminders(knowledge, three:, seven:)
