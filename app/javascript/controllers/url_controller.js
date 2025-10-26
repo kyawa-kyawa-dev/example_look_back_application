@@ -37,9 +37,8 @@ export default class extends Controller {
     this.buttonTarget.insertAdjacentElement("beforebegin", wrapper)
   }
 
-  delete () {
-    const url = this.urlTarget
-    // クリックされたURL入力欄を削除する
-    url.remove()
+  delete (event) {
+    // クリックされた削除ボタンの親要素（wrapper div）を削除する
+    event.currentTarget.closest('[data-url-target="url"]').remove()
   }
 }
