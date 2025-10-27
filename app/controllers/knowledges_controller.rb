@@ -58,6 +58,15 @@ class KnowledgesController < ApplicationController
     return render :new, status: :unprocessable_entity
   end
 
+  def edit
+    @knowledge = Knowledge.includes(:context_references, :reminders).find(params[:id])
+    @tags = Tag.where(user_id: current_user.id)
+
+    # リマインダーが登録されているかどうか確認する
+    @has_three_day_reminder = @knowledge.reminders.map(&:three?).any?
+    @has_seven_day_reminder = @knowledge.reminders.map(&:seven?).any?
+  end
+
   private
 
   def permit_params
