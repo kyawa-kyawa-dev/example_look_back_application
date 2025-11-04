@@ -70,6 +70,8 @@ class KnowledgesController < ApplicationController
     # 新しく追加するContextReferencesの処理
     submitted_urls = Set.new(permit_params[:urls].compact_blank)
     current_urls = Set.new(@knowledge.context_references.pluck(:url))
+    new_urls = (submitted_urls - current_urls).to_a # 新しいContextReference
+    unnecessary_urls = (current_urls - submitted_urls).to_a # 不要になったContextReference
     ActiveRecord::Base.transaction do
       @knowledge.update!(
         title: permit_params[:title],
@@ -79,11 +81,11 @@ class KnowledgesController < ApplicationController
       @knowledge.tag_ids = @selected_tag_ids # タグの更新(自動で追加・削除される)
 
       # ContextReferenceの更新処理
-      new_context_references = (submitted_urls - current_urls).to_a.map do |new_context_reference|
+      new_context_references = new_urls.map do |new_context_reference|
         { url: new_context_reference }
       end
-      @knowledge.context_references.create!(new_context_references) # 新規ContextReferenceの追加
-      @knowledge.context_references.where(url: (current_urls - submitted_urls).to_a).destroy_all # 不要なContextReferenceの削除
+      @knowledge.context_references.create!(new_context_references)
+      @knowledge.context_references.where(url: unnecessary_urls).destroy_all
     end
 
     redirect_to @knowledge, notice: "変更を適用しました"
