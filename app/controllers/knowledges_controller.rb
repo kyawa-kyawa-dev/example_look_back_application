@@ -59,21 +59,26 @@ class KnowledgesController < ApplicationController
   end
 
   def edit
-    @knowledge = Knowledge.includes(:tags, :context_references, :reminders).find(params[:id])
-    @tags = Tag.where(user_id: current_user.id)
-
-    # 選択されているタグを取得する
-    @registered_tag_ids = @knowledge.tags.pluck(:id)
-
-    # リマインダーが登録されているかどうか確認する
-    @has_three_day_reminder = @knowledge.reminders.map(&:three?).any?
-    @has_seven_day_reminder = @knowledge.reminders.map(&:seven?).any?
+    get_current_knowledge_infos(current_user.id, params[:id])
   end
 
   def update
-    puts "-------------------------------"
-    puts permit_params.inspect
-    puts "-------------------------------"
+    @current_user = current_user
+    @existing_tag_ids = has_tags?(permit_params) ? permit_params[:tag_ids]&.map(&:to_i) : []
+    @knowledge = Knowledge.find(params[:id])
+    @knowledge.assign_attributes(
+      title: permit_params[:title],
+      body: permit_params[:body],
+      user_id: @current_user.id,
+      tag_ids: @existing_tag_ids
+    )
+
+    # 既存の内容と変更がないならrenderする
+    unless @knowledge.changed?
+      get_current_knowledge_infos(@current_user.id, params[:id])
+      flash.now[:alert] = "変更がありません"
+      return render :edit, status: :unprocessable_entity unless @knowledge.changed?
+    end
   end
 
   private
@@ -112,5 +117,18 @@ class KnowledgesController < ApplicationController
     end.compact
 
     knowledge.reminders.create!(reminder_datas) if reminder_datas.present?
+  end
+
+  # edit, updateアクションで使用する事前に登録されているナレッジの情報を取得するメソッド
+  def get_current_knowledge_infos(current_user_id, knowledge_id)
+    @knowledge = Knowledge.includes(:tags, :context_references, :reminders).find(knowledge_id)
+    @tags = Tag.where(user_id: current_user_id)
+
+    # 選択されているタグを取得する
+    @registered_tag_ids = @knowledge.tags.pluck(:id)
+
+    # リマインダーが登録されているかどうか確認する
+    @has_three_day_reminder = @knowledge.reminders.map(&:three?).any?
+    @has_seven_day_reminder = @knowledge.reminders.map(&:seven?).any?
   end
 end
