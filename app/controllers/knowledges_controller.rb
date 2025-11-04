@@ -64,21 +64,20 @@ class KnowledgesController < ApplicationController
 
   def update
     @current_user = current_user
-    @existing_tag_ids = has_tags?(permit_params) ? permit_params[:tag_ids]&.map(&:to_i) : []
     @knowledge = Knowledge.find(params[:id])
-    @knowledge.assign_attributes(
-      title: permit_params[:title],
-      body: permit_params[:body],
-      user_id: @current_user.id,
-      tag_ids: @existing_tag_ids
-    )
+    @selected_tag_ids = has_tags?(permit_params) ? permit_params[:tag_ids]&.map(&:to_i) : []
+    ActiveRecord::Base.transaction do
+      @knowledge.update!(
+        title: permit_params[:title],
+        body: permit_params[:body],
+        user_id: @current_user.id
+      )
 
-    # 既存の内容と変更がないならrenderする
-    unless @knowledge.changed?
-      get_current_knowledge_infos(@current_user.id, params[:id])
-      flash.now[:alert] = "変更がありません"
-      return render :edit, status: :unprocessable_entity unless @knowledge.changed?
+      # 以下はタグ関連の更新処理
+      @knowledge.tag_ids = @selected_tag_ids
     end
+
+    redirect_to @knowledge, notice: "変更を適用しました"
   end
 
   private
