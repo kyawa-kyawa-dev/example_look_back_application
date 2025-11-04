@@ -1,8 +1,11 @@
 <div data-controller="knowledge">
+  <% is_selected = @registered_tag_ids.include?(tag.id) %>
+  <% selected_class = is_selected ? 'ring-2 ring-offset-2' : 'opacity-70 hover:opacity-100' %>
+  <% visibility_class = is_selected ? '' : 'hidden' %>
   <button 
     type="button"
     id="<%= tag.id %>"
-    class="px-4 py-2 rounded-full font-medium text-sm transition-all opacity-70 hover:opacity-100 cursor-pointer"
+    class="px-4 py-2 rounded-full font-medium text-sm transition-all cursor-pointer <%= selected_class%>"
     style="background-color: <%= tag.color %>20; color: <%= tag.color %>; border-color: <%= tag.color %>; border: 1px solid;"
     data-knowledge-target="tag" 
     data-action="click->knowledge#select">
@@ -13,7 +16,7 @@
       </svg>
       <span>#<%= tag.name %></span>
       <!-- ×ボタン -->
-      <span data-knowledge-close class="ml-1 hover:bg-black hover:bg-opacity-10 rounded-full px-1 hidden cursor-pointer">
+      <span data-knowledge-close class="ml-1 hover:bg-white hover:bg-opacity-10 rounded-full px-1 cursor-pointer <%= visibility_class %>">
         ×
       </span>
     </span>
@@ -21,7 +24,8 @@
   
   <input 
     type="hidden" 
-    id="<%= tag.id %>" 
-    value="" 
+    id="<%= tag.id %>"
+    <%= is_selected ? 'name="knowledge[tag_ids][]"' : '' %>
+    value="<%= is_selected ? tag.id : '' %>" 
     data-knowledge-target="hidden">
 </div>

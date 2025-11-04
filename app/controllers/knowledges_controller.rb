@@ -59,12 +59,21 @@ class KnowledgesController < ApplicationController
   end
 
   def edit
-    @knowledge = Knowledge.includes(:context_references, :reminders).find(params[:id])
+    @knowledge = Knowledge.includes(:tags, :context_references, :reminders).find(params[:id])
     @tags = Tag.where(user_id: current_user.id)
+
+    # 選択されているタグを取得する
+    @registered_tag_ids = @knowledge.tags.pluck(:id)
 
     # リマインダーが登録されているかどうか確認する
     @has_three_day_reminder = @knowledge.reminders.map(&:three?).any?
     @has_seven_day_reminder = @knowledge.reminders.map(&:seven?).any?
+  end
+
+  def update
+    puts "-------------------------------"
+    puts permit_params.inspect
+    puts "-------------------------------"
   end
 
   private
