@@ -25,7 +25,7 @@
   <input 
     type="hidden" 
     id="<%= tag.id %>"
-    <%= is_selected ? 'name="knowledge[tag_ids][]"' : '' %>
+    name="<%= is_selected ? 'knowledge[tag_ids][]' : '' %>"
     value="<%= is_selected ? tag.id : '' %>" 
     data-knowledge-target="hidden">
 </div>
