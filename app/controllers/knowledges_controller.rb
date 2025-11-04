@@ -82,7 +82,8 @@ class KnowledgesController < ApplicationController
       new_context_references = (submitted_urls - current_urls).to_a.map do |new_context_reference|
         { url: new_context_reference }
       end
-      @knowledge.context_references.create!(new_context_references)
+      @knowledge.context_references.create!(new_context_references) # 新規ContextReferenceの追加
+      @knowledge.context_references.where(url: (current_urls - submitted_urls).to_a).destroy_all # 不要なContextReferenceの削除
     end
 
     redirect_to @knowledge, notice: "変更を適用しました"
