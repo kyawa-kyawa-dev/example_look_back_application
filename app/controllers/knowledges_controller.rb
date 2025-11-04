@@ -66,15 +66,23 @@ class KnowledgesController < ApplicationController
     @current_user = current_user
     @knowledge = Knowledge.find(params[:id])
     @selected_tag_ids = has_tags?(permit_params) ? permit_params[:tag_ids]&.map(&:to_i) : []
+
+    # 新しく追加するContextReferencesの処理
+    submitted_urls = Set.new(permit_params[:urls].compact_blank)
+    current_urls = Set.new(@knowledge.context_references.pluck(:url))
     ActiveRecord::Base.transaction do
       @knowledge.update!(
         title: permit_params[:title],
         body: permit_params[:body],
         user_id: @current_user.id
       )
+      @knowledge.tag_ids = @selected_tag_ids # タグの更新(自動で追加・削除される)
 
-      # 以下はタグ関連の更新処理
-      @knowledge.tag_ids = @selected_tag_ids
+      # ContextReferenceの更新処理
+      new_context_references = (submitted_urls - current_urls).to_a.map do |new_context_reference|
+        { url: new_context_reference }
+      end
+      @knowledge.context_references.create!(new_context_references)
     end
 
     redirect_to @knowledge, notice: "変更を適用しました"
