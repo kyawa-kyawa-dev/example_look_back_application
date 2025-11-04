@@ -1,5 +1,5 @@
 <div data-controller="knowledge">
-  <% is_selected = @registered_tag_ids.include?(tag.id) %>
+  <% is_selected = @registered_tag_ids&.include?(tag.id) %>
   <% selected_class = is_selected ? 'ring-2 ring-offset-2' : 'opacity-70 hover:opacity-100' %>
   <% visibility_class = is_selected ? '' : 'hidden' %>
   <button 
