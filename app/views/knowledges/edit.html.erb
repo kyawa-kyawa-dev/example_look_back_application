@@ -109,14 +109,14 @@
           </label>
           <div class="space-y-3">
               <div class="flex items-start">
-                <%= f.check_box :notify_3days, { checked: @has_three_day_reminder, class: "w-4 h-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500 mt-1" } %>
+                <%= f.check_box :notify_3days, checked: @has_three_day_reminder, class: "w-4 h-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500 mt-1" %>
                 <%= f.label :notify_3days, class: "ml-3 text-sm text-gray-700" do %>
                   <span class="font-medium">3日後に通知</span>
                   <span class="text-gray-500 block text-xs mt-0.5">3日後に復習のリマインドを受け取ります</span>
                 <% end %>
               </div>
               <div class="flex items-center">
-                  <%= f.check_box :notify_7days, { checked: @has_seven_day_reminder }, class: "w-4 h-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500 mt-1" %>
+                  <%= f.check_box :notify_7days, checked: @has_seven_day_reminder, class: "w-4 h-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500 mt-1" %>
                   <%= f.label :notify_7days, class: "ml-3 text-sm text-gray-700" do %>
                     <span class="font-medium">7日後に通知</span>
                     <span class="text-gray-500 block text-xs mt-0.5">1週間後に復習のリマインドを受け取ります</span>
