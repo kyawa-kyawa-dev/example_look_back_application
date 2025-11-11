@@ -89,6 +89,19 @@ class KnowledgesController < ApplicationController
     end
 
     redirect_to @knowledge, notice: "変更を適用しました"
+  rescue ActiveRecord::RecordInvalid => e
+    get_current_knowledge_infos(@current_user_id, @knowledge.id)
+
+    puts "エラー詳細"
+    puts e.inspect
+    # ナレッジに関連するエラーが生じた場合には@knowledgeのエラーとしてレコードを返す
+    if e.record.errors.any?
+      e.record.errors.each do |error|
+        @knowledge.errors.add(:base, error.full_message)
+      end
+    end
+
+    render :edit, status: :unprocessable_entity
   end
 
   private
