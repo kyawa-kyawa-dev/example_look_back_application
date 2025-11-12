@@ -121,6 +121,16 @@ class KnowledgesController < ApplicationController
     render :edit, status: :unprocessable_entity
   end
 
+  def destroy
+    @knowledge = Knowledge.find(params[:id])
+
+    if @knowledge.destroy
+      redirect_to knowledges_path, notice: "ナレッジを削除しました", status: :see_other
+    else
+      redirect_to knowledge_path(@knowledge), alert: "ナレッジの削除に失敗しました"
+    end
+  end
+
   private
 
   def permit_params
