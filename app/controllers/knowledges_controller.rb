@@ -72,6 +72,8 @@ class KnowledgesController < ApplicationController
     current_urls = Set.new(@knowledge.context_references.pluck(:url))
     new_urls = (submitted_urls - current_urls).to_a # 新しいContextReference
     unnecessary_urls = (current_urls - submitted_urls).to_a # 不要になったContextReference
+    existing_3day = @knowledge.reminders.three.any?
+    existing_7day = @knowledge.reminders.seven.any?
     ActiveRecord::Base.transaction do
       @knowledge.update!(
         title: permit_params[:title],
@@ -86,6 +88,21 @@ class KnowledgesController < ApplicationController
       end
       @knowledge.context_references.create!(new_context_references)
       @knowledge.context_references.where(url: unnecessary_urls).destroy_all
+
+      # Reminderの更新処理
+      # 3日リマインダー
+      if permit_params[:notify_3days].to_i == 1 && !existing_3day
+        @knowledge.reminders.create({ scheduled_at: Time.current + 3.days, remind_type: :three })
+      elsif permit_params[:notify_3days].to_i == 0 && existing_3day
+        @knowledge.reminders.three[0].destroy
+      end
+
+      # 7日リマインダー
+      if permit_params[:notify_7days].to_i == 1 && !existing_7day
+        @knowledge.reminders.create({ scheduled_at: Time.current + 7.days, remind_type: :seven })
+      elsif permit_params[:notify_7days].to_i == 0 && existing_7day
+        @knowledge.reminders.seven[0].destroy
+      end
     end
 
     redirect_to @knowledge, notice: "変更を適用しました"
