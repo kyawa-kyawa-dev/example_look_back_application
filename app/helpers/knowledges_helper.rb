@@ -1,7 +1,9 @@
 module KnowledgesHelper
-  def back_to_knowledges_list_link(from)
+  def back_to_knowledges_list_link(from: nil)
+    path = safe_referer_path(fallback: knowledges_path, from: from)
+
     link_to(
-      safe_referer_path(fallback: knowledges_path, from),
+      path,
       class: "mb-4 text-indigo-600 hover:underline flex items-center gap-1 cursor-pointer"
     ) do
       svg_icon + " 一覧に戻る"

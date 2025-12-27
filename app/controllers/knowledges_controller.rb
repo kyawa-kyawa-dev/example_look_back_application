@@ -107,7 +107,7 @@ class KnowledgesController < ApplicationController
       end
     end
 
-    redirect_to @knowledge, notice: "変更を適用しました"
+    redirect_to knowledge_path(@knowledge, from: "update"), notice: "変更を適用しました"
   rescue ActiveRecord::RecordInvalid => e
     get_current_knowledge_infos(@current_user_id, @knowledge.id)
 
