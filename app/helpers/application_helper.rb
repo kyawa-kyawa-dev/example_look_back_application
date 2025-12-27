@@ -10,4 +10,9 @@ module ApplicationHelper
 
     return uri.host == request.host ? referer : fallback
   end
+
+  # ナレッジの作成日時を表示するためのカスタムヘルパー
+  def knowledge_update_at_tag(updated_at)
+    tag.span(time_ago_in_words(updated_at), class: "text-base text-gray-500")
+  end
 end
