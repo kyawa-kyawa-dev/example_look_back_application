@@ -10,6 +10,7 @@ class KnowledgesController < ApplicationController
   def show
     # ここでは個別のナレッジを表示する
     @knowledge = Knowledge.includes(:tags, :context_references, :reminders).find(params[:id])
+    @requested_from = params[:from].presence
   end
 
   def new
@@ -42,7 +43,7 @@ class KnowledgesController < ApplicationController
     end
 
     # トランザクションが成功した場合にのみナレッジ詳細にリダイレクトする
-    redirect_to @knowledge, notice: "ナレッジを追加しました"
+    redirect_to knowledge_path(@knowledge, from: "create"), notice: "ナレッジを追加しました"
   rescue ActiveRecord::RecordInvalid => e
     @knowledge = Knowledge.new(
       title: permit_params[:title],
