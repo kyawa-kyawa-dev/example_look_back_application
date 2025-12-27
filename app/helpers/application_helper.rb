@@ -1,6 +1,9 @@
 module ApplicationHelper
   # 以下は安全にRefererを使用するためのメソッド
-  def safe_referer_path(fallback: root_path)
+  def safe_referer_path(fallback: root_path, from)
+    # リクエストの送信元のアクションがcreate, updateの場合には一覧ページへのリンクを返す
+    return knowledges_path if from == "create" || from == "update"
+
     referer = request.referer
 
     return fallback if referer.blank?
