@@ -10,10 +10,6 @@
         >
           <%= @tag.name %>
         </span>
-        <% if (Time.current - knowledge.created_at) > SECONDS_PER_DAY  %>
-          <span class="text-base text-gray-500"><%= ((Time.current - knowledge.created_at) / SECONDS_PER_DAY).floor %>日前</span>
-        <% else %>
-          <span class="text-base text-gray-500">今日</span>
-        <% end %>
+        <%= knowledge_updated_at_tag(knowledge.updated_at) %>
     </div>
 <% end %>

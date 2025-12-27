@@ -2,7 +2,7 @@
   <div class="mb-2 bg-white rounded-lg border border-gray-200 p-6 hover:shadow-md transition-shadow cursor-pointer">
     <div class="flex items-start justify-between mb-3">
       <h3 class="text-lg font-bold text-gray-900"><%= knowledge.title %></h3>
-      <span class="text-sm text-gray-500"><%= knowledge.created_at.strftime("%p %I:%M") %></span>
+      <%= knowledge_updated_at_tag(knowledge.updated_at) %>
     </div>
     <p class="text-gray-600 text-sm mb-4 font-mono bg-gray-50 p-3 rounded">
       <%= knowledge.body %>
