@@ -16,6 +16,6 @@ module ApplicationHelper
 
   # ナレッジの作成日時を表示するためのカスタムヘルパー
   def knowledge_updated_at_tag(updated_at)
-    tag.span(time_ago_in_words(updated_at), class: "text-base text-gray-500")
+    tag.span("#{time_ago_in_words(updated_at)}前", class: "text-base text-gray-500")
   end
 end
