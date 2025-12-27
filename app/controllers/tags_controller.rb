@@ -15,6 +15,9 @@ class TagsController < ApplicationController
       sort_option == "newest" ?
         @tag.knowledges.left_joins(:reminders).order(created_at: :desc) : 
         @tag.knowledges.left_joins(:reminders).order(created_at: :asc)
+    
+    # ページネーションの設定
+    @pagy, @knowledges = pagy(:offset, @knowledges_scope, limit: 6, size: [1, 2, 2, 1])
 
     @total_count = @knowledges_scope.count
     @this_week_count = @knowledges_scope.where('knowledges.created_at >= ?', 1.week.ago).count

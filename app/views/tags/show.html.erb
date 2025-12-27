@@ -59,10 +59,13 @@
       </div>
     </div>
 
+    <!-- ページネーション -->
+    <%== @pagy.series_nav %>
+
     <!-- ナレッジ一覧 -->
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-4">
       <!-- これはTagに関連づいたKnowledgeを一覧で表示するためのパーシャル -->
-      <%= render partial: 'knowledge', collection: @knowledges_scope %>
+      <%= render partial: 'knowledge', collection: @knowledges %>
     </div>
   </div>
 </main>
