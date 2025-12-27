@@ -4,6 +4,7 @@ class KnowledgesController < ApplicationController
     @today_knowledges = Knowledge.where(user_id: current_user.id)
                                  .where(created_at: Time.current.all_day)
                                  .includes(:tags)
+                                 .order(updated_at: :desc)
   end
 
   def show
