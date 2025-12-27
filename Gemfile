@@ -55,6 +55,9 @@ gem 'devise'
 # 日本語化に対応
 gem 'rails-i18n'
 
+# ページネーション
+gem 'pagy', '~> 43.2' # Omit the patch segment to avoid breaking changes
+
 # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
 # gem "image_processing", "~> 1.2"
 
