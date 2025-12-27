@@ -44,5 +44,8 @@
 .vscode/
 .idea/
 
+# MCP configuration
+.mcp.json
+
 /app/assets/builds/*
 !/app/assets/builds/.keep
