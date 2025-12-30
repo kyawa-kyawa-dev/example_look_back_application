@@ -38,20 +38,31 @@
     <div class="border-b border-gray-200 mb-6">
       <div class="flex gap-8">
         <button
+          data-tab-target="button"
+          data-tab-name="picked"
+          data-action="click->tab#selectTab"
           class="pb-3 px-1 font-semibold text-sm transition-colors relative text-indigo-600"
         >
           今日のピックアップ
           <div class="absolute bottom-0 left-0 right-0 h-0.5 bg-indigo-600"></div>
         </button>
         <button
+          data-tab-target="button"
+          data-tab-name="past"
+          data-action="click->tab#selectTab"
           class="pb-3 px-1 font-semibold text-sm transition-colors relative text-gray-500 hover:text-gray-700"
         >
           過去のナレッジ
+          <div class="absolute bottom-0 left-0 right-0 h-0.5 bg-indigo-600 hidden"></div>
         </button>
         <button
+          data-tab-target="button"
+          data-tab-name="review"
+          data-action="click->tab#selectTab"
           class="pb-3 px-1 font-semibold text-sm transition-colors relative text-gray-500 hover:text-gray-700"
         >
           復習予定
+          <div class="absolute bottom-0 left-0 right-0 h-0.5 bg-indigo-600 hidden"></div>
         </button>
       </div>
     </div>
@@ -59,12 +70,12 @@
     <!-- タブコンテンツ -->
     <div class="space-y-4">
       <!-- 過去のナレッジ -->
-      <div data-tab-target="content" data-tab-name="past" class="">
+      <div data-tab-target="content" data-tab-name="past" class="hidden">
         <!-- ここに過去のナレッジを表示 -->
       </div>
 
       <!-- 本日のピックアップ -->
-      <div data-tab-target="content" data-tab-name="picked" class="hidden">
+      <div data-tab-target="content" data-tab-name="picked" class="">
         <!-- ここに本日のピックアップを表示 -->
       </div>
 
