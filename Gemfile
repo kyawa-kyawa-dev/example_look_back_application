@@ -55,6 +55,9 @@ gem 'devise'
 # 日本語化に対応
 gem 'rails-i18n'
 
+# deviseも日本語に対応
+gem 'devise-i18n'
+
 # ページネーション
 gem 'pagy', '~> 43.2' # Omit the patch segment to avoid breaking changes
 
